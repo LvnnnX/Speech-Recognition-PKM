@@ -29,15 +29,14 @@ def check_latest_file(path:str):
 def generate(type:str, many:int=1):
     check_file(type)
     start_num = check_latest_file(type)
-    
-    p = pyaudio.PyAudio()
-    stream = p.open(format=FORMAT,
-                    channels=CHANNELS,
-                    rate=RATE,
-                    input=True,
-                    frames_per_buffer=CHUNK)
     for x in range(many):
-        print("Recording...")
+        p = pyaudio.PyAudio()
+        stream = p.open(format=FORMAT,
+                        channels=CHANNELS,
+                        rate=RATE,
+                        input=True,
+                        frames_per_buffer=CHUNK)
+        print(f"Recording for {type.upper()}...")
         FRAMES = []
         seconds = 3
         for i in range(0, int(RATE / CHUNK * seconds)):
@@ -58,4 +57,4 @@ def generate(type:str, many:int=1):
         print(f"Saved as {type}_{start_num + x+1}.wav")
 
 
-generate('maju', 1)
+generate('maju', 48)
