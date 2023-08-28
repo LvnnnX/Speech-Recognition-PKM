@@ -12,7 +12,7 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
 ROOT = os.getcwd()
-all_type = ['maju','belok_kiri','belok_kanan','serong_kiri','serong_kanan','stop','putar_balik_kiri', 'putar_balik_kanan']
+all_type = ['maju','belok_kiri','belok_kanan','serong_kiri','serong_kanan','stop','putar_balik_kiri', 'putar_balik_kanan', 'other']
 
 def check_file(path:str):
     if not os.path.exists(os.path.join(ROOT, 'dataset')):
@@ -58,13 +58,14 @@ def generate(type:str, many:int=1):
         
         print(f"Saved as {type}_{start_num + x+1}.wav")
 
-for type in all_type[-2:]:
+
+for type in ['other']:
     if input('Start? y/n').lower() == 'y':
         print(f'Get ready to record {type} ...')
         for i in range(3):
             print(3-i, end=' ')
             time.sleep(1)
         print()
-        generate(type, 20)
+        generate(type, 50)
     else:
         break

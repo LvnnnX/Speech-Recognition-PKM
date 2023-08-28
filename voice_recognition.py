@@ -23,6 +23,21 @@ model = pickle.load(open(os.path.join('model','svm_model_speech_recognition.pkl'
 
 scaler = pickle.load(open(os.path.join('model','svm_scaler_speech_recognition.pkl'), 'rb'))
 
+maps = {
+    'maju': 0,
+    'belok_kiri': 1,
+    'belok_kanan': 2,
+    'serong_kiri': 3,
+    'serong_kanan': 4,
+    'stop': 5,
+    'putar_balik_kiri': 6,
+    'putar_balik_kanan': 7,
+    'other': 8
+}
+
+key_list = list(maps.keys())
+val_list = list(maps.values())
+
 def mfcc(audio_obj:str=None, frame_rate:int=2048, hop_len:int=512, mfcc_num:int=100):
     signal, sr = librosa.load(audio_obj)
     mfcc_spectrum = librosa.feature.mfcc(y=signal, sr=sr, n_fft=frame_rate, hop_length=hop_len, n_mfcc=mfcc_num)
@@ -79,7 +94,7 @@ def main():
         wf.writeframes(b''.join(FRAMES))
         wf.close()
         
-        print(predict())
+        print(key_list[val_list.index(predict()[0])])
         
 main()
         
