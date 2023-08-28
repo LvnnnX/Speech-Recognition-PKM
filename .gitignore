@@ -9,6 +9,10 @@ __pycache__/
 /dataset/
 /logs/
 /*.h5
+/excel/
+/model
+/tmp
+
 
 # Distribution / packaging
 .Python

@@ -26,5 +26,9 @@ Open your CMD in current directory by right clicking in your file explorer and t
 
 # Todo
 - [x] Record my voice
-- [ ] Make the models 
+- [x] Make the models (SVM) (>80% Accuracy)
+- [ ] Make the models (Deep Learning) 
+- [ ] Add more noise sound (Hella need a lot)
 - [ ] Test
+
+

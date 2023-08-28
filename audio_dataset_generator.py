@@ -5,24 +5,26 @@ import speech_recognition as sr
 import pyaudio
 import wave
 import glob
+import time
 
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
+ROOT = os.getcwd()
 all_type = ['maju','belok_kiri','belok_kanan','serong_kiri','serong_kanan','stop','putar_balik_kiri', 'putar_balik_kanan']
 
 def check_file(path:str):
-    os.getcwd()
-    if not os.path.exists('dataset'):
+    if not os.path.exists(os.path.join(ROOT, 'dataset')):
         os.makedirs('dataset')
 
-    if not os.path.exists(os.path.join('dataset', path)):
-        os.makedirs(os.path.join('dataset', path))
+    if not os.path.exists(os.path.join(ROOT, 'dataset', path)):
+        os.makedirs(os.path.join(ROOT, 'dataset', path))
     
-    return os.chdir(os.path.join('dataset', path))
+    return os.chdir(os.path.join(ROOT, 'dataset', path))
 
 def check_latest_file(path:str):
+    os.chdir(os.path.join(ROOT, 'dataset', path))
     list_of_files = glob.glob('*.wav')
     return len(list_of_files)
 
@@ -56,5 +58,13 @@ def generate(type:str, many:int=1):
         
         print(f"Saved as {type}_{start_num + x+1}.wav")
 
-
-generate('maju', 48)
+for type in all_type[-2:]:
+    if input('Start? y/n').lower() == 'y':
+        print(f'Get ready to record {type} ...')
+        for i in range(3):
+            print(3-i, end=' ')
+            time.sleep(1)
+        print()
+        generate(type, 20)
+    else:
+        break
