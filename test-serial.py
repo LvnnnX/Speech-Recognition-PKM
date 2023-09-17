@@ -1,11 +1,15 @@
 from voice_recognition import *
-import serial
 from threading import Thread
 import time
-import concurrent.futures
+import serial
+import serial.tools.list_ports
+ports = serial.tools.list_ports.comports()
+serialInst = serial.Serial()
 
 # ser = serial.serial('/dev/tty.usbmodem14101', baudrate=9600)
-
+serialInst.baudrate = 115200
+serialInst.port = "COM3"
+serialInst.open()
 
 if not os.path.exists(os.path.join(ROOT, 'tmp')):
     os.mkdir(os.path.join(ROOT, 'tmp'))
@@ -41,10 +45,22 @@ class Voice(Thread):
         wf.close()
         value =  key_list[val_list.index(predict()[0])]
 
-def get_num():
-    return 1
 
+class sendSerial(Thread):
+    def run(self):
+        global value
+        try:
+            while True:
+                data_to_send = input("Enter data to send to ESP32: ")
+                serialInst.write(data_to_send.encode())  # Send data to ESP32
+                received_data = serialInst.readline().decode().strip()  # Read data from ESP32
+                print("Received from ESP32:", received_data)
 
+        except KeyboardInterrupt:
+            pass
+            # serialInst.close()  # Close the serial port when the script is interrupted
+        # time.sleep(3)
+        # value = 0
 # with concurrent.futures.ThreadPoolExecutor() as executor:
 #     while True:
 #         run_voice = executor.submit(run_voice)
@@ -54,7 +70,9 @@ def get_num():
 while True:        
     Voice().start()
     time.sleep(3)
-    print(value)
+    sendSerial().start()
+    
+    
 
         
         

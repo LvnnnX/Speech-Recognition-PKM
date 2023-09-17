@@ -19,7 +19,7 @@ ROOT = os.getcwd()
 
 all_type = ['maju','belok_kiri','belok_kanan','serong_kiri','serong_kanan','stop','putar_balik_kiri', 'putar_balik_kanan']
 
-model = pickle.load(open(os.path.join('model','cnn_model_speech_recognition.pkl'), 'rb'))
+model = pickle.load(open(os.path.join('model','svm_model_speech_recognition.pkl'), 'rb'))
 
 scaler = pickle.load(open(os.path.join('model','svm_scaler_speech_recognition.pkl'), 'rb'))
 
