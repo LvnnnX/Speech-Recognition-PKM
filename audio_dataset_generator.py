@@ -59,13 +59,14 @@ def generate(type:str, many:int=1):
         print(f"Saved as {type}_{start_num + x+1}.wav")
 
 
-for type in ['other', '']:
+for type in ['other','']:
+    generated = 20 if type != 'other' else 50
     if input('Start? y/n').lower() == 'y':
         print(f'Get ready to record {type} ...')
         for i in range(3):
             print(3-i, end=' ')
             time.sleep(1)
         print()
-        generate(type, 50)
+        generate(type, generated)
     else:
         break

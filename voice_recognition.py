@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from tqdm import tqdm
-import speech_recognition as sr
+# import speech_recognition as sr
 import pyaudio
 import wave
 import glob
@@ -23,16 +23,28 @@ model = pickle.load(open(os.path.join('model','svm_model_speech_recognition.pkl'
 
 scaler = pickle.load(open(os.path.join('model','svm_scaler_speech_recognition.pkl'), 'rb'))
 
+# maps = {
+#     'maju': 0,
+#     'belok_kiri': 1,
+#     'belok_kanan': 2,
+#     'serong_kiri': 3,
+#     'serong_kanan': 4,
+#     'stop': 5,
+#     'putar_balik_kiri': 6,
+#     'putar_balik_kanan': 7,
+#     'other': 8
+# }
+
 maps = {
-    'maju': 0,
-    'belok_kiri': 1,
-    'belok_kanan': 2,
-    'serong_kiri': 3,
-    'serong_kanan': 4,
-    'stop': 5,
-    'putar_balik_kiri': 6,
-    'putar_balik_kanan': 7,
-    'other': 8
+    'm' : 0, #maju,
+    'b' : 1, #belok_kiri,
+    'k' : 2, #belok_kanan,
+    's' : 3, #serong_kiri,
+    'r' : 4, #serong_kanan,
+    't' : 5, #stop,
+    'p' : 6, #putar_balik_kiri,
+    'l' : 7, #putar_balik_kanan,
+    'o' : 8 #other
 }
 
 key_list = list(maps.keys())

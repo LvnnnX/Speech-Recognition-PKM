@@ -13,6 +13,8 @@ __pycache__/
 /model
 /tmp
 /untitled_project
+*.rar
+myenv/
 
 # Distribution / packaging
 .Python

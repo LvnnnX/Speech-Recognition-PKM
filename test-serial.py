@@ -15,7 +15,7 @@ if not os.path.exists(os.path.join(ROOT, 'tmp')):
     os.mkdir(os.path.join(ROOT, 'tmp'))
 os.chdir(os.path.join(ROOT, 'tmp'))
 
-value = 0
+value = '0'
 
 class Voice(Thread):
     def run(self):
@@ -50,11 +50,11 @@ class sendSerial(Thread):
     def run(self):
         global value
         try:
-            while True:
-                data_to_send = input("Enter data to send to ESP32: ")
-                serialInst.write(data_to_send.encode())  # Send data to ESP32
-                received_data = serialInst.readline().decode().strip()  # Read data from ESP32
-                print("Received from ESP32:", received_data)
+            # while True:
+                # data_to_send = input("Enter data to send to ESP32: ")
+            serialInst.write(value.encode())  # Send data to ESP32
+            received_data = serialInst.readline().decode().strip()  # Read data from ESP32
+            print("Received from ESP32:", received_data)
 
         except KeyboardInterrupt:
             pass
@@ -69,6 +69,7 @@ class sendSerial(Thread):
 #         print(run_voice.result())
 while True:        
     Voice().start()
+    print(value)
     time.sleep(3)
     sendSerial().start()
     
