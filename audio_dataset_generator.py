@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 from tqdm import tqdm
-import speech_recognition as sr
 import pyaudio
 import wave
 import glob
@@ -59,7 +58,7 @@ def generate(type:str, many:int=1):
         print(f"Saved as {type}_{start_num + x+1}.wav")
 
 
-for type in ['other','']:
+for type in all_type:
     generated = 20 if type != 'other' else 50
     if input('Start? y/n').lower() == 'y':
         print(f'Get ready to record {type} ...')

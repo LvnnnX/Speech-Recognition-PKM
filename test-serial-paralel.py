@@ -8,7 +8,7 @@ serialInst = serial.Serial()
 
 # ser = serial.serial('/dev/tty.usbmodem14101', baudrate=9600)
 serialInst.baudrate = 115200
-serialInst.port = "COM4"
+serialInst.port = "COM3"
 serialInst.open()
 
 if not os.path.exists(os.path.join(ROOT, 'tmp')):
@@ -16,6 +16,20 @@ if not os.path.exists(os.path.join(ROOT, 'tmp')):
 os.chdir(os.path.join(ROOT, 'tmp'))
 
 value = '0'
+
+def detect(p,stream,FRAMES,num):
+    # stream.stop_stream()
+    # stream.close()
+    # p.terminate()
+
+    wf = wave.open(f'data_{num}.wav', 'wb')
+    wf.setnchannels(CHANNELS)
+    wf.setsampwidth(p.get_sample_size(FORMAT))
+    wf.setframerate(RATE)
+    wf.writeframes(b''.join(FRAMES))
+    wf.close()
+    value =  key_list[val_list.index(predict(num)[0])]
+    return value
 
 class Voice(Thread):
     def run(self):
@@ -26,25 +40,21 @@ class Voice(Thread):
                         rate=RATE,
                         input=True,
                         frames_per_buffer=CHUNK)
-        print(f"Recording...")
+        # print(f"Recording...")
         FRAMES = []
-        seconds = 3
-        for i in range(0, int(RATE / CHUNK * seconds)):
+        # seconds = 3
+        counter = 0
+        while True:
+            counter += 1
+            # print('recording...')
+        # for i in range(0, int(RATE / CHUNK * 7)):
             data = stream.read(CHUNK)
             FRAMES.append(data)
+            if len(FRAMES) > int(RATE / CHUNK * 5):
+                FRAMES.pop(0)
+                counter = counter % 5
+                value = detect(p,stream,FRAMES,counter)
             
-        stream.stop_stream()
-        stream.close()
-        p.terminate()
-
-        wf = wave.open(f'data.wav', 'wb')
-        wf.setnchannels(CHANNELS)
-        wf.setsampwidth(p.get_sample_size(FORMAT))
-        wf.setframerate(RATE)
-        wf.writeframes(b''.join(FRAMES))
-        wf.close()
-        value =  key_list[val_list.index(predict()[0])]
-
 
 class sendSerial(Thread):
     def run(self):
@@ -54,7 +64,7 @@ class sendSerial(Thread):
                 # data_to_send = input("Enter data to send to ESP32: ")
             serialInst.write(value.encode())  # Send data to ESP32
             received_data = serialInst.readline().decode().strip()  # Read data from ESP32
-            print("Received from ESP32:", received_data)
+            print("Received from ESP32: ", received_data)
 
         except KeyboardInterrupt:
             pass
@@ -67,10 +77,12 @@ class sendSerial(Thread):
 #         run_num = executor.submit(get_num)
         
 #         print(run_voice.result())
+
+
+Voice().start()
+
 while True:        
-    Voice().start()
-    print(value)
-    time.sleep(3)
+    time.sleep(1)
     sendSerial().start()
     
     

@@ -71,8 +71,11 @@ def audio_features(path:os.PathLike=None, frame_size:int=2048, hop_len:int=512, 
 
     return df
 
-def predict():
-    df = audio_features(path=os.path.join(ROOT, 'tmp', 'data.wav'))
+def predict(num:int | None):
+    if num is None:
+        df = audio_features(path=os.path.join(ROOT, 'tmp', f'data.wav'))
+    else:
+        df = audio_features(path=os.path.join(ROOT, 'tmp', f'data_{num}.wav'))
     df = scaler.transform(df)
     y_pred = model.predict(df)
     return y_pred

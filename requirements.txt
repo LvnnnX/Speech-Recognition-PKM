@@ -83,6 +83,7 @@ seaborn==0.12.2
 six==1.16.0
 soundfile==0.12.1
 soxr==0.3.6
+SpeechRecognition==3.10.0
 stack-data==0.6.2
 tensorboard==2.13.0
 tensorboard-data-server==0.7.1
