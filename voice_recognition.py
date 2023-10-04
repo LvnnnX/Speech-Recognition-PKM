@@ -117,5 +117,9 @@ def main():
         except:
             print(key_list[val_list.index(predict()[0])])
         
+def check_microphone() -> None:
+    print("Checking for microphone...")
+    print(pyaudio.PyAudio().get_default_input_device_info())
+        
 if __name__ == '__main__':
-    main()
+    check_microphone()

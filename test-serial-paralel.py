@@ -54,6 +54,7 @@ class Voice(Thread):
                 FRAMES.pop(0)
                 counter = counter % 5
                 value = detect(p,stream,FRAMES,counter)
+            # time.sleep(1)
             
 
 class sendSerial(Thread):
