@@ -6,7 +6,7 @@ A speech recognition program to help me making the PKM-KC Models
 1. Go to your directory.
 2. Open your CMD in current directory and type 
 ```bash
-  git clone https://github.com/LvnnnX/Word-automation.git
+  git clone https://github.com/LvnnnX/Speech-Recognition-PKM
 ```
 3. Open the file and type
 ```bash
